@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1g4epas" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.1.1">
+  <bpmn:process id="SimpleWorkflowProcess" name="Simple Workflow" isExecutable="true">
+    <bpmn:startEvent id="MessageReceivedStartEvent" name="Message Received">
+      <bpmn:outgoing>Flow_067bx3g</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="ExternalServiceTask" name="External Service" camunda:type="external" camunda:topic="external">
+      <bpmn:incoming>Flow_067bx3g</bpmn:incoming>
+      <bpmn:outgoing>Flow_09t5fki</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_067bx3g" sourceRef="MessageReceivedStartEvent" targetRef="ExternalServiceTask" />
+    <bpmn:endEvent id="PrintToConsoleEndEvent" name="Print to Console">
+      <bpmn:incoming>Flow_09t5fki</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_09t5fki" sourceRef="ExternalServiceTask" targetRef="PrintToConsoleEndEvent" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SimpleWorkflowProcess">
+      <bpmndi:BPMNEdge id="Flow_067bx3g_di" bpmnElement="Flow_067bx3g">
+        <di:waypoint x="195" y="120" />
+        <di:waypoint x="330" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09t5fki_di" bpmnElement="Flow_09t5fki">
+        <di:waypoint x="430" y="120" />
+        <di:waypoint x="532" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="MessageReceivedStartEvent">
+        <dc:Bounds x="159" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="155" y="145" width="46" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1itzlhl_di" bpmnElement="ExternalServiceTask">
+        <dc:Bounds x="330" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0o8uh4p_di" bpmnElement="PrintToConsoleEndEvent">
+        <dc:Bounds x="532" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="511" y="145" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
