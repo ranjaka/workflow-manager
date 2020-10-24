@@ -56,7 +56,7 @@
     </dependencyManagement>
 
     <dependencies>
-<!--        Camunda SpringBoot starter-->
+        <!--        Camunda SpringBoot starter-->
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
@@ -73,7 +73,7 @@
             <artifactId>h2</artifactId>
         </dependency>
 
-<!--        SpringBoot db dependency-->
+        <!--        SpringBoot db dependency-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -116,13 +116,14 @@
             <scope>test</scope>
         </dependency>
 
-<!--        Lombok Logging framework-->
+        <!--        Lombok Logging framework-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
         </dependency>
 
+        <!--        Camunda external task client-->
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-external-task-client</artifactId>

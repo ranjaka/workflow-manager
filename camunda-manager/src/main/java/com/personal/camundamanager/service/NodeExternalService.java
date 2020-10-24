@@ -1,9 +1,8 @@
 package com.personal.camundamanager.service;
 
+import com.personal.camundamanager.config.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.client.ExternalTaskClient;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,10 +15,7 @@ import java.util.Map;
 @Slf4j
 public class NodeExternalService {
 
-    @Autowired
-    ProcessEngine processEngine;
-
-    public ExternalTaskClient initClient(){
+    public ExternalTaskClient initClient() {
         ExternalTaskClient client = ExternalTaskClient.create()
                 .baseUrl("http://localhost:8080/engine-rest")
                 .build();
@@ -27,21 +23,26 @@ public class NodeExternalService {
         client.subscribe("external")
                 .lockDuration(1000)
                 .handler((externalTask, externalTaskService) -> {
-                    log.info("Reached external task:");
-                    Map<String,Object> vars = new HashMap<>();
-                    vars.put("TestMessage","Hello");
 
-                    try{
+                    Map<String, Object> vars = new HashMap<>();
+
+                    try {
+                        log.info("Reached external task:");
+
+                        vars.put("TestMessage", "Hello");
+
                         String response = this.getExternalServiceResponse();
-                        vars.put("Response",response);
+                        vars.put("Response", response);
 
-                    }catch(IOException | InterruptedException e){
-                        log.error("Exception: {}",e.getMessage());
+                    } catch (IOException e) {
+                        log.error("Exception: {}", e.getMessage());
 
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+
+                    } finally {
+                        externalTaskService.complete(externalTask, vars);
                     }
-
-
-                    externalTaskService.complete(externalTask,vars);
 
 
                 }).open();
@@ -56,23 +57,13 @@ public class NodeExternalService {
 
         // Create a request
         HttpRequest request = HttpRequest.newBuilder(
-                URI.create("http://localhost:3000/home")).header("accept","application/json").build();
+                URI.create(Constants.EXTERNAL_TASK_URI+"/home")).header("accept", "application/json").build();
 
-
-        HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
-        log.info("Message received: {}",response.body());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        log.info("Message received: {}", response.body());
 
         return response.body();
 
-
     }
-
-
-
-
-
-
-
-
 
 }
