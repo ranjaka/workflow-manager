@@ -3,6 +3,7 @@ spring.datasource:
   username: sa
   password: sa
 spring.h2.console.enabled: true
+
 camunda.bpm:
   admin-user:
     id: demo
@@ -11,4 +12,12 @@ camunda.bpm:
     lastName: Demo
   filter:
     create: All Tasks
+  endpoint: "http://localhost:8080/engine-rest"
+
+  external-task-worker:
+    count: 1
+    retries: 2
+    retry-timeout: 3000
+    lock-timeout: 30000
 server.port: 8080
+
