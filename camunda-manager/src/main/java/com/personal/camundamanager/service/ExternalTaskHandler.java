@@ -2,6 +2,7 @@ package com.personal.camundamanager.service;
 
 import com.personal.camundamanager.config.CamundaConfig;
 import com.personal.camundamanager.config.Constants;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.client.task.ExternalTask;
@@ -28,13 +29,9 @@ public class ExternalTaskHandler implements CustomExternalTaskInterface {
     @Autowired
     CamundaConfig.CamundaExternalTaskWorkerConfig camundaExternalTaskWorkerConfig;
 
-
     @Override
-    @PostConstruct
-    @Transactional
     public void initExternalClientService() {
-
-
+        log.info("Bootstrap External Task Client");
         nodeClient.getExternalTaskClient()
                 .subscribe("external")
                 .lockDuration(camundaExternalTaskWorkerConfig.getLockTimeout())
@@ -53,7 +50,6 @@ public class ExternalTaskHandler implements CustomExternalTaskInterface {
                     } finally {
                         externalTaskService.complete(externalTask, vars);
                     }
-
                 }).open();
 
     }
